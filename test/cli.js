@@ -1,5 +1,3 @@
-/* eslint-env mocha */
-
 'use strict'
 
 const assert = require('assert').strict
@@ -15,17 +13,21 @@ const outputPath = './test/css/input.rtl.css'
 function runCommand (cmd, args, done) {
   const child = spawn(cmd, args)
   let output = ''
-  child.stderr.on('data', (data) => { output += data })
-  child.stdout.on('end', () => { done(output) })
+  child.stderr.on('data', (data) => {
+    output += data
+  })
+  child.stdout.on('end', () => {
+    done(output)
+  })
 }
 
 describe('# CLI', () => {
   it('Should succeed', (done) => {
     runCommand('node', [bin, inputPath, '--config', configPath, '--silent'], (err) => {
       if (err) throw new Error(err)
-      fs.readFile(expectedPath, 'utf-8', (err, expected) => {
+      fs.readFile(expectedPath, 'utf8', (err, expected) => {
         if (err) throw new Error(err)
-        fs.readFile(outputPath, 'utf-8', (err, output) => {
+        fs.readFile(outputPath, 'utf8', (err, output) => {
           if (err) throw new Error(err)
           assert.equal(expected, output)
           fs.unlink(outputPath, () => {

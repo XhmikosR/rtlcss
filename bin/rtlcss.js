@@ -2,8 +2,9 @@
 
 'use strict'
 
-const path = require('path')
 const fs = require('fs')
+const path = require('path')
+const process = require('process')
 const picocolors = require('picocolors')
 const postcss = require('postcss')
 const rtlcss = require('../lib/rtlcss.js')
@@ -32,22 +33,28 @@ const ErrorCodes = Object.freeze({
   ProcessingError: 2
 })
 
-let input, output, directory, ext, config
+let input
+let output
+let directory
+let ext
+let config
 let currentErrorcode = ErrorCodes.Ok
 const args = process.argv.slice(2)
 
-process.on('exit', () => { process.reallyExit(currentErrorcode) })
+process.on('exit', () => {
+  process.reallyExit(currentErrorcode)
+})
 
 function printWarning (...args) {
-  args.forEach(a => console.warn(picocolors.yellow(a)))
+  for (const arg of args) console.warn(picocolors.yellow(arg))
 }
 
 function printInfo (...args) {
-  args.forEach(a => console.info(picocolors.green(a)))
+  for (const arg of args) console.info(picocolors.green(arg))
 }
 
 function printError (...args) {
-  args.forEach(a => console.error(picocolors.red(a)))
+  for (const arg of args) console.error(picocolors.red(arg))
 }
 
 function printHelp () {
@@ -147,10 +154,10 @@ function walk (dir, done) {
             fs.readFile(file, 'utf8', (e, data) => {
               try {
                 processCSSFile(e, data, rtlFile)
-              } catch (e) {
+              } catch (error_) {
                 currentErrorcode = ErrorCodes.ProcessingError
                 printError(`rtlcss: error processing file ${file}`)
-                printError(e)
+                printError(error_)
               }
             })
           }
@@ -179,11 +186,12 @@ function main () {
         arg = args.shift()
         try {
           config = configLoader.load(path.resolve(arg))
-        } catch (e) {
-          printError(`rtlcss: invalid config file. ${e}`)
+        } catch (error) {
+          printError(`rtlcss: invalid config file. ${error}`)
           currentErrorcode = ErrorCodes.ArgumentError
           return
         }
+
         break
       case '-d':
       case '--directory':
@@ -195,6 +203,7 @@ function main () {
         break
       case '-s':
       case '--silent':
+        // eslint-disable-next-line no-multi-assign
         console.log = console.info = console.warn = () => {}
         break
       case '-':
@@ -213,6 +222,7 @@ function main () {
         } else if (!output) {
           output = path.resolve(arg)
         }
+
         break
     }
   }
@@ -254,10 +264,10 @@ function main () {
           fs.readFile(input, 'utf8', (err, data) => {
             try {
               processCSSFile(err, data)
-            } catch (err) {
+            } catch (error_) {
               currentErrorcode = ErrorCodes.ProcessingError
               printError(`rtlcss: error processing file ${input}`)
-              printError(err)
+              printError(error_)
             }
           })
         }

@@ -17,7 +17,7 @@ module.exports = [
           {
             name: 'content',
             expr: /content/im,
-            action (prop, value, cxt) {
+            action (prop, value) {
               if (value === '"A"') {
                 return { prop, value: '"ABC"' }
               }
