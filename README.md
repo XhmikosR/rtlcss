@@ -8,7 +8,6 @@
 [![npm version](https://img.shields.io/npm/v/rtlcss)](https://www.npmjs.com/package/rtlcss)
 [![CI Status](https://img.shields.io/github/actions/workflow/status/MohammadYounes/rtlcss/ci.yml?branch=master&label=CI)](https://github.com/MohammadYounes/rtlcss/actions/workflows/ci.yml?query=branch%3Amaster)
 
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-blue)](https://standardjs.com/)
 [![editor](https://img.shields.io/badge/editor-vscode-blue)](https://code.visualstudio.com/)
 [![Twitter](https://img.shields.io/badge/follow-%40rtlcss-blue)](https://twitter.com/rtlcss)
 

@@ -41,19 +41,66 @@
   "devDependencies": {
     "c8": "^7.13.0",
     "mocha": "^9.2.2",
-    "standard": "^17.0.0"
+    "xo": "^0.52.4"
   },
   "engines": {
     "node": ">=12.0.0"
   },
   "scripts": {
     "main": "node ./lib/rtlcss.js",
-    "lint": "standard",
-    "lint:fix": "npm run lint -- --fix",
+    "lint": "xo",
+    "lint:fix": "xo --fix",
     "mocha": "mocha",
     "mocha:special": "mocha --fgrep \"# Special\"",
     "test": "npm run lint && npm run main && npm run mocha",
     "test:ci": "npm run main && npm run mocha",
     "coverage": "c8 npm run mocha"
+  },
+  "xo": {
+    "space": true,
+    "semicolon": false,
+    "rules": {
+      "arrow-body-style": "off",
+      "arrow-parens": [
+        "error",
+        "always"
+      ],
+      "capitalized-comments": "off",
+      "comma-dangle": [
+        "error",
+        "never"
+      ],
+      "curly": [
+        "off",
+        "multi"
+      ],
+      "default-case": "off",
+      "n/prefer-promises/fs": "off",
+      "no-negated-condition": "off",
+      "object-curly-spacing": [
+        "error",
+        "always"
+      ],
+      "space-before-function-paren": [
+        "error",
+        "always"
+      ],
+      "spaced-comment": "off",
+      "unicorn/better-regex": "off",
+      "unicorn/filename-case": "off",
+      "unicorn/no-unused-properties": "error",
+      "unicorn/prefer-module": "off",
+      "unicorn/prefer-regexp-test": "off",
+      "unicorn/prefer-string-slice": "off",
+      "unicorn/prevent-abbreviations": "off"
+    },
+    "overrides": [
+      {
+        "files": "test/*.js",
+        "envs": [
+          "mocha"
+        ]
+      }
+    ]
   }
 }
